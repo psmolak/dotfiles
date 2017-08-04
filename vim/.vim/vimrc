@@ -1,0 +1,130 @@
+if empty(glob("~/.vim/autoload/plug.vim"))
+  execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+endif
+
+call plug#begin('~/.vim/plugged')
+
+  Plug 'junegunn/vim-easy-align'
+  Plug 'junegunn/fzf.vim'
+  Plug 'tpope/vim-rsi'
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-unimpaired'
+  Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-repeat'
+  Plug 'sheerun/vim-polyglot'
+  Plug 'adelarsq/vim-matchit'
+  Plug 'yuttie/comfortable-motion.vim'
+  Plug 'majutsushi/tagbar'
+  Plug 'Raimondi/delimitMate'
+  Plug 'scrooloose/nerdtree'
+  Plug 'jacoborus/tender.vim'
+
+call plug#end()
+
+set autoindent                 " Indent according to previous line
+set backspace=indent,eol,start " Make backspace work as expected
+set hidden                     " Allow to switch unsaved buffers
+set ignorecase                 " Do case insesitive searching
+set smartcase                  " Do case sensitive searching if pattern cosists of any uppercase letters
+set wrapscan                   " Searches wrap around EOF
+set report=0                   " Always report number of changed lines
+set ttyfast                    " Enable faster terminal redrawing
+set splitbelow                 " Open new split below the currently focused
+set splitright                 " Open new split on the right side of currently focused
+set clipboard^=unnamedplus     " Forward unnamed register to X11 clipboard
+set autoread                   " Automatically re-read file if changed outside Vim
+
+syntax enable
+colorscheme tender
+
+set laststatus=2              " Always show statusline
+set display=lastline          " Display as much line as possible with @@@ at the end
+set showbreak=↪               " Display '↪' at the beginnig of wrapped line
+set nowrap                    " Disable line wrapping
+set showcmd                   " Show partially typed key-chord on statusline
+set incsearch                 " Highligh while searching
+set hlsearch                  " Highlight matched words
+set termguicolors             " Enable True Colors support
+set t_8b=[48;2;%lu;%lu;%lum " Magic to make tc work inside tmux
+set t_8f=[38;2;%lu;%lu;%lum
+set nocursorline              " Disable line highlighting
+set number                    " Enable number line
+set relativenumber            " Enable relative number line
+set scrolloff=2               " Keep some context around cursor
+set wildmenu                  " Show completion menu
+set list                      " Show special characters
+set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+
+if has('gui_running')
+	set guioptions-=T
+	set guioptions-=l
+	set guioptions-=L
+	set guioptions-=r
+	set guioptions-=R
+endif
+
+" create directory if needed
+if !isdirectory($HOME.'/.vim/tmp') && exists('*mkdir')
+    call mkdir($HOME.'/.vim/tmp')
+endif
+
+set directory=$HOME/.vim/tmp              " Save swapfiles under custom directory
+set updatecount=100                       " Update swap file after 100 characters
+set undofile                              " Persistent undo history across vim restarts
+set undodir=$HOME/.vim/tmp                " Set and save undo files under custom directory
+set viminfo ='100,n$HOME/.vim/tmp/viminfo " Save viminfo files under custom directory
+
+let mapleader = " "
+let maplocalleader = " "
+
+" Normally, arrows complete history with respect to what has
+" been typed so far ie. echo<Up> complets to echo "Hello world"
+" C-n/p does not provide this, hence following mappings
+cnoremap <c-n> <down>
+cnoremap <c-p> <up>
+
+" Additional functionality for C-l (noh)
+nnoremap <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>ei :vsplit $HOME/.vim/impro.md<cr>
+nnoremap <leader>hq :help quickref<cr>
+nnoremap <leader>hs :help help-summary<cr>
+
+nnoremap <silent> <leader>w :match Error / \+$/<cr>
+nnoremap <leader>W :%s/ \+$//e<cr>
+
+nnoremap / /\v
+nnoremap ? ?\v
+
+nnoremap Y y$
+
+inoremap <c-l> <esc>
+vnoremap <c-l> <esc>
+
+xmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
+
+" Uppercase word
+inoremap <C-u> <esc>mzgUiw`za
+
+noremap j gj
+noremap k gk
+noremap gj j
+noremap gk k
+
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+" source vimrc after saving it
+augroup reload_vimrc
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
+
+" restore cursor position
+augroup restore_cursor
+  autocmd!
+  autocmd BufReadPost * call setpos(".", getpos("'\""))
+augroup END
