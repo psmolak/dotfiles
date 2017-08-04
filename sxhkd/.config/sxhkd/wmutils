@@ -1,0 +1,10 @@
+# move windows around
+super + {left,down,up,right}
+	wmv {-20 0, 0 20, 0 -20, 20, 0} $(pfw)
+
+
+# resize windows
+super + alt + {left,down,up,right}
+	wrs {-20 0, 0 20, 0 -20, 20, 0} $(pfw)
+
+

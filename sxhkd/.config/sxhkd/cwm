@@ -1,0 +1,21 @@
+# you don't have to use sxhkd for your hotkey daemon - xbindkeys is an alternative
+# set modifiers - https://wildefyr.net/blog/2015/05/Modifying-Modifiers.html
+
+# reload sxhkd
+super + shift + r
+    pkill -USR1 -x sxhkd
+
+# launch programs
+super + Return
+    urxvt -cd ${WM_PWD}
+
+super + space
+    dmenu
+
+# snap the window to the corners and middle of screen 2
+super + {g,y,u,b,n}
+    snap {--middle,--topleft,--topright,--bottomleft,--bottomright}
+
+# handy shortcuts to place window in a useful position
+super + {q,w,e,r,a,s,b}
+    position {--left,--quartar,--right,--fuller,--restore,--extend,--bottom}
