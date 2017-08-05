@@ -6,6 +6,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'junegunn/vim-easy-align'
   Plug 'junegunn/fzf.vim'
+  Plug 'junegunn/seoul256.vim'
   Plug 'tpope/vim-rsi'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-unimpaired'
@@ -18,6 +19,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'Raimondi/delimitMate'
   Plug 'scrooloose/nerdtree'
   Plug 'jacoborus/tender.vim'
+  Plug 'ap/vim-buftabline'
 
 call plug#end()
 
@@ -29,6 +31,7 @@ set smartcase                  " Do case sensitive searching if pattern cosists 
 set wrapscan                   " Searches wrap around EOF
 set report=0                   " Always report number of changed lines
 set ttyfast                    " Enable faster terminal redrawing
+set lazyredraw                 " Enable faster rendering when doing macros
 set splitbelow                 " Open new split below the currently focused
 set splitright                 " Open new split on the right side of currently focused
 set clipboard^=unnamedplus     " Forward unnamed register to X11 clipboard
@@ -52,7 +55,7 @@ set number                    " Enable number line
 set relativenumber            " Enable relative number line
 set scrolloff=2               " Keep some context around cursor
 set wildmenu                  " Show completion menu
-set list                      " Show special characters
+set nolist                    " Show special characters
 set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
 
 if has('gui_running')
@@ -86,8 +89,8 @@ cnoremap <c-p> <up>
 " Additional functionality for C-l (noh)
 nnoremap <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>ei :vsplit $HOME/.vim/impro.md<cr>
+nnoremap <leader>ev :e $MYVIMRC<cr>
+nnoremap <leader>ei :e $HOME/.vim/impro.md<cr>
 nnoremap <leader>hq :help quickref<cr>
 nnoremap <leader>hs :help help-summary<cr>
 
@@ -117,6 +120,7 @@ noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
+
 " source vimrc after saving it
 augroup reload_vimrc
     autocmd!
