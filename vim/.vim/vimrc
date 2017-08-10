@@ -116,11 +116,6 @@ noremap k gk
 noremap gj j
 noremap gk k
 
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
-
 " source vimrc after saving it
 augroup reload_vimrc
     autocmd!
