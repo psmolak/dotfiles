@@ -106,7 +106,7 @@ inoremap <c-l> <esc>
 vnoremap <c-l> <esc>
 
 xmap ga <Plug>(EasyAlign)
-xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 " Uppercase word
 inoremap <C-u> <esc>mzgUiw`za
