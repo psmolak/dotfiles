@@ -5,8 +5,6 @@ endif
 call plug#begin('~/.vim/plugged')
 
   Plug 'junegunn/vim-easy-align'
-  Plug 'junegunn/fzf.vim'
-  Plug 'junegunn/seoul256.vim'
   Plug 'tpope/vim-rsi'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-unimpaired'
@@ -80,46 +78,35 @@ set viminfo ='100,n$HOME/.vim/tmp/viminfo " Save viminfo files under custom dire
 let mapleader = " "
 let maplocalleader = " "
 
-" Normally, arrows complete history with respect to what has
-" been typed so far ie. echo<Up> complets to echo "Hello world"
-" C-n/p does not provide this, hence following mappings
+" Better default mappings
 cnoremap <c-n> <down>
 cnoremap <c-p> <up>
-
-" Additional functionality for C-l (noh)
-nnoremap <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
-
-nnoremap <leader>ev :e $MYVIMRC<cr>
-nnoremap <leader>ei :e $HOME/.vim/impro.md<cr>
-nnoremap <leader>hq :help quickref<cr>
-nnoremap <leader>hs :help help-summary<cr>
-
-" Toggle mappings
-nnoremap <leader>tn :let [&nu, &rnu] = [!&rnu, &nu+&rnu==1]<cr>
-nnoremap <leader>tb :let &background = (&background == "dark" ? "light" : "dark")<cr>
-
-nnoremap <silent> <leader>w :match Error / \+$/<cr>
-
-nnoremap <leader>W :%s/ \+$//e<cr>
-
 nnoremap / /\v
 nnoremap ? ?\v
-
 nnoremap Y y$
-
-inoremap <c-l> <esc>
-vnoremap <c-l> <esc>
-
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-
-" Uppercase word
-inoremap <C-u> <esc>mzgUiw`za
-
 noremap j gj
 noremap k gk
 noremap gj j
 noremap gk k
+
+" Disable highlighting after searching
+nnoremap <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+
+" Exit to normal mode
+inoremap <c-l> <esc>
+vnoremap <c-l> <esc>
+
+" Edit config at any time
+nnoremap <leader>ev :e $MYVIMRC<cr>
+nnoremap <leader>ei :e $HOME/.vim/impro.md<cr>
+
+" Toggle number line
+nnoremap <leader>tn :let [&nu, &rnu] = [!&rnu, &nu+&rnu==1]<cr>
+" Toggle background
+nnoremap <leader>tb :let &background = (&background == "dark" ? "light" : "dark")<cr>
+
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 " source vimrc after saving it
 augroup reload_vimrc
