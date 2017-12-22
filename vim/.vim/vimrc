@@ -94,7 +94,12 @@ nnoremap <leader>ei :e $HOME/.vim/impro.md<cr>
 nnoremap <leader>hq :help quickref<cr>
 nnoremap <leader>hs :help help-summary<cr>
 
+" Toggle mappings
+nnoremap <leader>tn :let [&nu, &rnu] = [!&rnu, &nu+&rnu==1]<cr>
+nnoremap <leader>tb :let &background = (&background == "dark" ? "light" : "dark")<cr>
+
 nnoremap <silent> <leader>w :match Error / \+$/<cr>
+
 nnoremap <leader>W :%s/ \+$//e<cr>
 
 nnoremap / /\v
