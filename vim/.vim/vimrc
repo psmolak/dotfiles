@@ -18,6 +18,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'scrooloose/nerdtree'
   Plug 'jacoborus/tender.vim'
   Plug 'ap/vim-buftabline'
+  Plug 'ntpeters/vim-better-whitespace'
+    hi! link ExtraWhitespace Error
 
 call plug#end()
 
@@ -104,6 +106,8 @@ nnoremap <leader>ei :e $HOME/.vim/impro.md<cr>
 nnoremap <leader>tn :let [&nu, &rnu] = [!&rnu, &nu+&rnu==1]<cr>
 " Toggle background
 nnoremap <leader>tb :let &background = (&background == "dark" ? "light" : "dark")<cr>
+" Toggle trailing whitespaces highlighting
+nnoremap <silent> <leader>tt :ToggleWhitespace<cr>
 
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
