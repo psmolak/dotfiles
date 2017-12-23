@@ -111,9 +111,11 @@ nnoremap <leader>tn :let [&nu, &rnu] = [!&rnu, &nu+&rnu==1]<cr>
 " Toggle background
 nnoremap <leader>tb :let &background = (&background == "dark" ? "light" : "dark")<cr>
 " Toggle trailing whitespaces highlighting
-nnoremap <silent> <leader>tt :ToggleWhitespace<cr>
+nnoremap <leader>tt :ToggleWhitespace<cr>
 " Toggle line wrapping
-nnoremap <silent> <leader>tl :set wrap!<cr>
+nnoremap <leader>tl :set wrap!<cr>
+" Toggle file browser
+nnoremap <leader>tf :NERDTreeToggle<cr>
 
 " Plugin manager mappings
 nnoremap <leader>pi :PlugInstall<cr>
