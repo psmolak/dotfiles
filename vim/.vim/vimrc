@@ -69,14 +69,6 @@ set wildmenu                   " Show completion menu
 set nolist                     " Show special characters
 set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
 
-if has('gui_running')
-	set guioptions-=T
-	set guioptions-=l
-	set guioptions-=L
-	set guioptions-=r
-	set guioptions-=R
-endif
-
 " create directory if needed
 if !isdirectory($HOME.'/.vim/tmp') && exists('*mkdir')
     call mkdir($HOME.'/.vim/tmp')
