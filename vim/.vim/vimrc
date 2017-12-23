@@ -4,22 +4,34 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-  Plug 'junegunn/vim-easy-align'
+  " Editing
   Plug 'tpope/vim-rsi'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-unimpaired'
   Plug 'tpope/vim-commentary'
-  Plug 'tpope/vim-repeat'
+  Plug 'Raimondi/delimitMate'
+  Plug 'junegunn/vim-easy-align'
+    xmap ga <Plug>(EasyAlign)
+    nmap ga <Plug>(EasyAlign)
+
+  " Syntax
+  Plug 'jacoborus/tender.vim'
   Plug 'sheerun/vim-polyglot'
   Plug 'adelarsq/vim-matchit'
-  Plug 'yuttie/comfortable-motion.vim'
+
+  " Interface
   Plug 'majutsushi/tagbar'
-  Plug 'Raimondi/delimitMate'
-  Plug 'scrooloose/nerdtree'
-  Plug 'jacoborus/tender.vim'
   Plug 'ap/vim-buftabline'
+  Plug 'scrooloose/nerdtree'
   Plug 'ntpeters/vim-better-whitespace'
     hi! link ExtraWhitespace Error
+  Plug 'yuttie/comfortable-motion.vim'
+    let g:comfortable_motion_no_default_key_mappings = 1
+    let g:comfortable_motion_impulse_multiplier = 1
+    nnoremap <silent> <C-d> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 2)<CR>
+    nnoremap <silent> <C-u> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * -2)<CR>
+    nnoremap <silent> <C-f> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * 4)<CR>
+    nnoremap <silent> <C-b> :call comfortable_motion#flick(g:comfortable_motion_impulse_multiplier * winheight(0) * -4)<CR>
 
 call plug#end()
 
@@ -97,6 +109,7 @@ nnoremap <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 " Exit to normal mode
 inoremap <c-l> <esc>
 vnoremap <c-l> <esc>
+cnoremap <c-l> <esc>
 
 " Edit config at any time
 nnoremap <leader>ev :e $MYVIMRC<cr>
@@ -109,8 +122,6 @@ nnoremap <leader>tb :let &background = (&background == "dark" ? "light" : "dark"
 " Toggle trailing whitespaces highlighting
 nnoremap <silent> <leader>tt :ToggleWhitespace<cr>
 
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
 
 " source vimrc after saving it
 augroup reload_vimrc
