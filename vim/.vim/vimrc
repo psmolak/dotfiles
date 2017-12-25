@@ -1,4 +1,10 @@
+"  _
+" |_)|    _ o._  _
+" |  ||_|(_||| |_>
+"         _|
+
 if empty(glob("~/.vim/autoload/plug.vim"))
+  execute '!mkdir ~/.vim/tmp'
   execute '!mkdir ~/.vim/autoload && wget -O ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
@@ -36,49 +42,55 @@ call plug#begin('~/.vim/plugged')
 
 call plug#end()
 
+"  __
+" /__ _ ._  _ .__.|
+" \_|(/_| |(/_|(_||
+"
+
 colorscheme tender
 
-set autoindent                 " Indent according to previous line
-set backspace=indent,eol,start " Make backspace work as expected
-set hidden                     " Allow to switch unsaved buffers
-set ignorecase                 " Do case insesitive searching
-set smartcase                  " Do case sensitive searching if pattern cosists of any uppercase letters
-set wrapscan                   " Searches wrap around EOF
-set report=0                   " Always report number of changed lines
-set ttyfast                    " Enable faster terminal redrawing
-set lazyredraw                 " Enable faster rendering when doing macros
-set splitbelow                 " Open new split below the currently focused
-set splitright                 " Open new split on the right side of currently focused
-set clipboard^=unnamedplus     " Forward unnamed register to X11 clipboard
-set autoread                   " Automatically re-read file if changed outside Vim
-set laststatus=2               " Always show statusline
-set display=lastline           " Display as much line as possible with @@@ at the end
-set showbreak=↪                " Display '↪' at the beginnig of wrapped line
-set nowrap                     " Disable line wrapping
-set showcmd                    " Show partially typed key-chord on statusline
-set incsearch                  " Highligh while searching
-set hlsearch                   " Highlight matched words
-set termguicolors              " Enable True Colors support
-set t_8b=[48;2;%lu;%lu;%lum  " Magic to make tc work inside tmux
+set autoindent                            " Indent according to previous line
+set backspace=indent,eol,start            " Make backspace work as expected
+set hidden                                " Allow to switch unsaved buffers
+set ignorecase                            " Do case insesitive searching
+set smartcase                             " Do case sensitive searching if pattern cosists of any uppercase letters
+set wrapscan                              " Searches wrap around EOF
+set report=0                              " Always report number of changed lines
+set ttyfast                               " Enable faster terminal redrawing
+set lazyredraw                            " Enable faster rendering when doing macros
+set splitbelow                            " Open new split below the currently focused
+set splitright                            " Open new split on the right side of currently focused
+set clipboard^=unnamedplus                " Forward unnamed register to X11 clipboard
+set autoread                              " Automatically re-read file if changed outside Vim
+set laststatus=2                          " Always show statusline
+set display=lastline                      " Display as much line as possible with @@@ at the end
+set showbreak=↪                           " Display '↪' at the beginnig of wrapped line
+set nowrap                                " Disable line wrapping
+set showcmd                               " Show partially typed key-chord on statusline
+set incsearch                             " Highligh while searching
+set hlsearch                              " Highlight matched words
+set termguicolors                         " Enable True Colors support
+set t_8b=[48;2;%lu;%lu;%lum             " Magic to make tc work inside tmux
 set t_8f=[38;2;%lu;%lu;%lum
-set nocursorline               " Disable line highlighting
-set number                     " Enable number line
-set relativenumber             " Enable relative number line
-set scrolloff=2                " Keep some context around cursor
-set wildmenu                   " Show completion menu
-set nolist                     " Show special characters
-set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
-
-" create directory if needed
-if !isdirectory($HOME.'/.vim/tmp') && exists('*mkdir')
-    call mkdir($HOME.'/.vim/tmp')
-endif
-
+set nocursorline                          " Disable line highlighting
+set number                                " Enable number line
+set relativenumber                        " Enable relative number line
+set scrolloff=2                           " Keep some context around cursor
+set wildmenu                              " Show completion menu
+set nolist                                " Show special characters
+set listchars=tab:▸\ ,eol:¬
+set listchars+=extends:❯
+set listchars+=precedes:❮
 set directory=$HOME/.vim/tmp              " Save swapfiles under custom directory
 set updatecount=100                       " Update swap file after 100 characters
 set undofile                              " Persistent undo history across vim restarts
 set undodir=$HOME/.vim/tmp                " Set and save undo files under custom directory
 set viminfo ='100,n$HOME/.vim/tmp/viminfo " Save viminfo files under custom directory
+
+"
+" |\/| _.._ ._ o._  _  _
+" |  |(_||_)|_)|| |(_|_>
+"        |  |       _|
 
 let mapleader = " "
 let maplocalleader = " "
@@ -97,7 +109,7 @@ noremap gk k
 " Disable highlighting after searching
 nnoremap <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
-" Exit to normal mode
+" Switch to normal mode
 inoremap <c-l> <esc>
 vnoremap <c-l> <esc>
 cnoremap <c-l> <esc>
@@ -106,23 +118,31 @@ cnoremap <c-l> <esc>
 nnoremap <leader>ev :e $MYVIMRC<cr>
 nnoremap <leader>ei :e $HOME/.vim/impro.md<cr>
 
-" Toggle number line
-nnoremap <leader>tn :let [&nu, &rnu] = [!&rnu, &nu+&rnu==1]<cr>
-" Toggle background
-nnoremap <leader>tb :let &background = (&background == "dark" ? "light" : "dark")<cr>
-" Toggle trailing whitespaces highlighting
-nnoremap <leader>tt :ToggleWhitespace<cr>
-" Toggle line wrapping
-nnoremap <leader>tl :set wrap!<cr>
-" Toggle file browser
+" Toggle options
 nnoremap <leader>tf :NERDTreeToggle<cr>
+nnoremap <leader>tn :let [&nu, &rnu] = [!&rnu, &nu+&rnu==1]<cr>
+nnoremap <leader>tw :set wrap!<cr>
+nnoremap <leader>ths :if exists("g:syntax_on") <bar> syntax off <bar> else <bar> syntax enable <bar> endif<cr>
+nnoremap <leader>thw :ToggleWhitespace<cr>
+nnoremap <leader>thl :set cursorline!<cr>
+nnoremap <leader>thc :set cursorcolumn!<cr>
 
-" Plugin manager mappings
+" Work with buffers
+nnoremap <leader>bw :write<cr>
+nnoremap <leader>bd :bdelete<cr>
+nnoremap <leader>bn :bnext<cr>
+nnoremap <leader>bp :bprev<cr>
+
+" Work with plugins
 nnoremap <leader>pi :PlugInstall<cr>
 nnoremap <leader>pu :PlugUpdate<cr>
 nnoremap <leader>pc :PlugClean<cr>
 nnoremap <leader>ps :PlugStatus<cr>
 
+"
+"  /\   _|_ _  _ _ ._ _ ._ _  _.._  _| _
+" /--\|_||_(_)(_(_)| | || | |(_|| |(_|_>
+"
 
 " source vimrc after saving it
 augroup reload_vimrc
