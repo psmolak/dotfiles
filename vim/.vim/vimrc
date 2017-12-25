@@ -9,6 +9,7 @@ if empty(glob("~/.vim/autoload/plug.vim"))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+
 call plug#begin('~/.vim/plugged')
 
   " Editing
@@ -17,6 +18,20 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-unimpaired'
   Plug 'tpope/vim-commentary'
   Plug 'Raimondi/delimitMate'
+    " <S-Tab> jumps over one closing match
+    " <C-G>g jumps over all closing matches
+    " <C-G>g will jump over all closing elemenets
+    let delimitMate_matchpairs = "(:),[:],{:},<:>"
+
+    let delimitMate_expand_cr = 1
+    let delimitMate_expand_space = 1
+    let delimitMate_insert_eol_marker = 0
+    let delimitMate_eol_marker = ';'
+    let delimitMate_jump_expansion = 1
+    let delimitMate_balance_matchpairs = 1
+
+    au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
+
   Plug 'junegunn/vim-easy-align'
     xmap ga <Plug>(EasyAlign)
     nmap ga <Plug>(EasyAlign)
@@ -117,6 +132,9 @@ cnoremap <c-l> <esc>
 " Edit config at any time
 nnoremap <leader>ev :e $MYVIMRC<cr>
 nnoremap <leader>ei :e $HOME/.vim/impro.md<cr>
+
+" Quit vim
+nnoremap <leader>q :quit<cr>
 
 " Toggle options
 nnoremap <leader>tf :NERDTreeToggle<cr>
