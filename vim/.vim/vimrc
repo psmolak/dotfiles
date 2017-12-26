@@ -18,19 +18,13 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-unimpaired'
   Plug 'tpope/vim-commentary'
   Plug 'Raimondi/delimitMate'
-    " <S-Tab> jumps over one closing match
-    " <C-G>g jumps over all closing matches
-    " <C-G>g will jump over all closing elemenets
     let delimitMate_matchpairs = "(:),[:],{:},<:>"
-
     let delimitMate_expand_cr = 1
     let delimitMate_expand_space = 1
     let delimitMate_insert_eol_marker = 0
     let delimitMate_eol_marker = ';'
     let delimitMate_jump_expansion = 1
     let delimitMate_balance_matchpairs = 1
-
-    au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
 
   Plug 'junegunn/vim-easy-align'
     xmap ga <Plug>(EasyAlign)
@@ -42,9 +36,17 @@ call plug#begin('~/.vim/plugged')
   Plug 'adelarsq/vim-matchit'
 
   " Interface
+  Plug 'itchyny/lightline.vim'
+    let g:lightline = { 'colorscheme': 'tenderplus' }
+
   Plug 'majutsushi/tagbar'
   Plug 'ap/vim-buftabline'
   Plug 'scrooloose/nerdtree'
+    let g:NERDTreeShowHidden = 1
+    let g:NERDTreeQuitOnOpen = 1
+    let g:NERDTreeMinimalUI = 1
+    let g:NERDTreeCascadeOpenSingleChildDir = 1
+
   Plug 'ntpeters/vim-better-whitespace'
     hi! link ExtraWhitespace Error
   Plug 'yuttie/comfortable-motion.vim'
@@ -63,6 +65,8 @@ call plug#end()
 "
 
 colorscheme tender
+" temporary fix for gutter column
+hi SignColumn guifg=#282828 ctermfg=235 guibg=#282828 ctermbg=235 gui=NONE cterm=NONE
 
 set autoindent                            " Indent according to previous line
 set backspace=indent,eol,start            " Make backspace work as expected
