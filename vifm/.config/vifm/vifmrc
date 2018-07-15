@@ -110,15 +110,9 @@ nnoremap <esc>[1;6C <nop>
 nnoremap <esc>[1;6A <nop>
 nnoremap <esc>[1;6B <nop>
 
-
-fileviewer *.zip,*.jar,*.war,*.ear,*.oxt zip -sf %c
-fileviewer *.tgz,*.tar.gz tar -tzf %c
-fileviewer *.tar.bz2,*.tbz2 tar -tjf %c
-fileviewer *.tar.txz,*.txz xz --list %c
-fileviewer *.tar tar -tf %c
-fileviewer *.rar unrar v %c
-fileviewer *.7z 7z l %c
-
 " xoria256, rdark, freya, darkbone
-fileviewer *.* highlight -O xterm256 --validate-input -s freya
-fileviewer Makefile highlight -O xterm256 --syntax Make -s freya
+fileviewer <text/*> highlight -O xterm256 --failsafe -s freya
+
+" https://q2a.vifm.info/338/disable-defalt-filepreview-for-directories-and-binary-files
+fileviewer /.*\// file --mime-type
+fileviewer /.*/ file --mime-type
