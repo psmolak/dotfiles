@@ -78,12 +78,8 @@ source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring
 # Simple prompt
 PROMPT='%B%F{white}λ%f%b %~ > '
 
-# desktop environment support
-autoload -U add-zsh-hook
-add-zsh-hook -Uz chpwd (){ echo "$PWD" >/home/psmolak/prj/ricing/desktop-environment/cwd }
+# Add bin to PATH
+PATH=$HOME/bin:"$PATH"
 
-# zranger
-autoload -U zranger
-bindkey -s '\ez' "\eq zranger\n"
-
-PATH="$HOME"/.local/bin:"$PATH"
+# Keychain
+eval $(keychain --eval --agents ssh id_rsa)
