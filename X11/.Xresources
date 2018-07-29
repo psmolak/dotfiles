@@ -1,5 +1,0 @@
-#include ".Xresources.d/urxvt"
-#include "colors/current"
-
-*font: xft:Ubuntu Mono:size=12
-*background: #151515
