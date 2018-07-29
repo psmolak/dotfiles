@@ -1,15 +1,8 @@
 super + Return
-	urxvt
+	st
 
 super + space
 	dmenu_run
-
-super + u
-	selsave; \
-	twmnc --content "Saved in clipboard!" --pos top_center
-
-super + shift + u
-	sel-fzf
 
 {super + grave,Menu}
 	tylda
@@ -18,12 +11,11 @@ super + shift + r
 	pkill -USR1 -x sxhkd
 
 alt + w
-	hsetroot -fill $(find -L ~/wallpapers -type f | shuf -n1)
+	hsetroot -fill $(find -L ~/prj/ricing/assets -type f | shuf -n1)
 
 XF86Audio{Lower,Raise}Volume
-	volume {-,+} 5% && twmnc -t 'Volume' -c "$(volume level)" --id 100
+	amixer set Master 5%{-,+}
 
 XF86AudioMute
-	volume '!' && twmnc -t 'Volume' -c "$(volume state)" --id 100
+	amixer set Master toggle
 
-#XF86MonBrightness{Down,Up}
