@@ -1,3 +1,4 @@
+# Xorg configurations
 setxkbmap -layout pl
 xset r rate 200 30
 hsetroot -fill $(find -L ~/prj/ricing/wallpapers -type f | shuf -n1)
@@ -34,9 +35,19 @@ _dwm() {
 		esac
 		xsetroot -name "$(printf " %s %s %s " $day $(date +'%d') $(date +'%R'))"
 	done &
-	exec dwm
+	xrdb -merge ~/.Xresources
+	clipmenud &
+	st -c 'tylda' &
+	redshift &
+	exec dwm 2>"${HOME}/.dwm.log"
+}
+
+_i3() {
+	xrdb -merge ~/.Xresources
+	clipmenud &
+	redshift &
+	exec i3
 }
 
 _dwm
-
-# vim: set ft=sh
+#/* vim: set ft=sh */

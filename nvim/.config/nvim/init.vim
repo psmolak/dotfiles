@@ -1,11 +1,6 @@
 " Neovim configuration file
 
-if empty(glob("~/.local/share/nvim/site/autoload/plug.vim"))
-  echo "Please install junegunn/vim-plug in order to load config file"
-  finish
-endif
-
-call plug#begin('~/.local/share/nvim/plugged')
+" call plug#begin('~/.local/share/nvim/plugged')
 
   " Editing & moving
   Plug 'raimondi/delimitMate'
@@ -14,38 +9,39 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'tpope/vim-rsi'
   Plug 'tpope/vim-endwise'
   Plug 'tpope/vim-surround'
-  Plug 'tpope/vim-commentary'
-  Plug 'tpope/vim-unimpaired'
+  Plug 'tomtom/tcomment_vim'
+    let g:tcomment#blank_lines = 1
   Plug 'justinmk/vim-sneak'
-  Plug 'junegunn/vim-easy-align'
-    nmap ga <Plug>(EasyAlign)
-    xmap ga <Plug>(EasyAlign)
+  Plug 'tommcdo/vim-lion'
+  Plug 'ajh17/vimcompletesme'
 
   " Interface
   Plug 'junegunn/fzf.vim'
   Plug 'ap/vim-buftabline'
-  Plug 'justinmk/vim-sneak'
+    let g:buftabline_show = 1
   Plug 'scrooloose/nerdtree'
     let g:NERDTreeMapActivateNode = 'l'
     let g:NERDTreeMapCloseDir = 'h'
     let g:NERDTreeMapPreview = 'L'
   Plug 'machakann/vim-highlightedyank'
     let g:highlightedyank_highlight_duration = 100
-  Plug 'itchyny/lightline.vim'
-    let g:lightline = { 'colorscheme': 'tenderplus' }
 
-  " Syntax
-  Plug 'sheerun/vim-polyglot'
+  " Colors
+  Plug 'cocopon/iceberg.vim'
+  Plug 'archSeer/colibri.vim'
   Plug 'jacoborus/tender.vim'
+  Plug 'tyrannicaltoucan/vim-deep-space'
 
   " Other
+  Plug 'ap/vim-css-color'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-sleuth'
+  Plug 'tpope/vim-unimpaired'
   Plug 'pbrisbin/vim-mkdir'
-  Plug 'ajh17/vimcompletesme'
+  Plug 'sheerun/vim-polyglot'
   Plug 'pbrisbin/vim-restore-cursor'
-  Plug 'yuttie/comfortable-motion.vim'
   Plug 'editorconfig/editorconfig-vim'
+  Plug 'yuttie/comfortable-motion.vim'
 
 call plug#end()
 
@@ -92,12 +88,12 @@ nnoremap c "_c
 xnoremap c "_c
 
 " Move visual block
-vnoremap J :m '>+1<cr>gv=gv;
-vnoremap K :m '<-2<cr>gv=gv
-vnoremap gj J
+vnoremap <c-j> :m '>+1<cr>gv=gv;
+vnoremap <c-k> :m '<-2<cr>gv=gv
 
-" Repeat macro over selected lines
-vnoremap @ :norm! @
+" Better macros
+xnoremap Q :norm! @
+nnoremap Q @q
 
 " Select whatever's just been pasted
 nnoremap gV `[V`]
@@ -115,7 +111,7 @@ vnoremap n nzz
 vnoremap N Nzz
 
 " Disable artefacts after searching
-nnoremap <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+nnoremap <c-l> :nohlsearch<bar>diffupdate<bar>syntax sync fromstart<cr>
 
 " Switch to normal mode
 inoremap <c-l> <c-c>
@@ -134,18 +130,17 @@ nnoremap <leader>tl :set list!<cr>
 nnoremap <leader>ths :if exists("g:syntax_on")<bar>syntax off<bar>else<bar>syntax enable<bar>endif<cr>
 nnoremap <leader>thl :set cursorline!<cr>
 nnoremap <leader>thc :set cursorcolumn!<cr>
+nnoremap <leader>thC :call css_color#toggle()<cr>
 
 " Working with buffers
 nnoremap <leader>bw :write<cr>
 nnoremap <leader>bd :w<cr>:bdelete<cr>
 nnoremap <leader>bD :bdelete!<cr>
-nnoremap <leader>bn :bnext<cr>
-nnoremap <leader>bp :bprev<cr>
 nnoremap <leader>bo :%bd<bar>e#<bar>bd#<cr>
 
 " Cycle through buffer list
-nnoremap <silent> <tab> :bnext<cr>
-nnoremap <silent> <s-tab> :bprev<cr>
+nmap <expr> <tab> v:count > 0 ? '<Plug>BufTabLine.Go(' . v:count . ')' : ':bnext<cr>'
+nmap <expr> <s-tab> v:count > 0 ? '<Plug>BufTabLine.Go(' . v:count . ')' : ':bprev<cr>'
 
 " Working with plugins
 nnoremap <leader>pi :PlugInstall<cr>
@@ -154,7 +149,20 @@ nnoremap <leader>pc :PlugClean<cr>
 nnoremap <leader>ps :PlugStatus<cr>
 
 " Fzf
-nnoremap <leader>f :Files<cr>
-nnoremap <leader>F :GFiles<cr>
+if executable('fd')
+  command! -bang -nargs=? -complete=dir Files
+        \ call fzf#vim#files(<q-args>, {'source': 'fd -H -E .cache -E .git -t f'}, <bang>0)
+endif
+nnoremap <leader>ff :Files<cr>
+nnoremap <leader>fF :GFiles<cr>
+nnoremap <leader>fl :BLines<cr>
+nnoremap <leader>fc :Commands<cr>
 
-
+" Show syntax highlighting groups for word under cursor
+nmap <leader>sh :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc

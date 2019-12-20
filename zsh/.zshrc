@@ -50,7 +50,7 @@ alias df='df -h'
 # Show sizes in MB
 alias free='free -m'
 # Switch to Neovim
-alias vim=nvim
+# alias vim=nvim
 
 # Theming section
 autoload -U compinit colors zcalc
@@ -82,4 +82,13 @@ PROMPT='%B%F{white}λ%f%b %~ > '
 PATH=$HOME/bin:"$PATH"
 
 # Keychain
-eval $(keychain --eval --agents ssh id_rsa)
+eval $(keychain --quiet --quick --eval --agents ssh id_rsa)
+
+# Source this script at start (-i does not work for me)
+if [ ! -z "$USERSCRIPT" ]
+then
+	source "$USERSCRIPT"
+fi
+
+# opam configuration
+test -r /home/ricer/.opam/opam-init/init.zsh && . /home/ricer/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true

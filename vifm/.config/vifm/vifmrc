@@ -1,6 +1,6 @@
 " Vifm configuration file
 
-colorscheme istib-solarized-dark
+colorscheme solarized-dark
 
 set vimhelp          " Enable help
 set confirm-=delete  " Disable confirmation of safe delete
@@ -9,33 +9,36 @@ set cpoptions-=s     " Explicit selection
 set dotdirs=''       " Disable showing '../' folder
 set nofollowlinks    " Treat links as normal files
 set incsearch        " Filter in real-time
-set mintimeoutlen=50 " Decrease waiting time between input polls
 set scrolloff=3      " Keep space above and below cursor
 set ignorecase       " Ignore case in searching
 set smartcase        " Enable smart case switching when searching
 set sortnumbers      " Natural sort of numbers within text
 set syscalls         " Use systemcalls for deleting files
 set tuioptions+=u    " Use unicode in the TUI
-set vicmd='nvim'     " Switch to neovim
+set vicmd='vim'     " Switch to neovim
 set wildmenu         " Show possible matches of completion
 set nowrap           " Disable wrapping text
 set dirsize=nitems   " Seems to be more usefull
 set timeoutlen=99999 " https://git.io/fNm1d
+set dotfiles         " Show dotfiles by default
 
 set suggestoptions=normal,view,otherpane,keys,marks,registers
 set milleroptions=csize:1,rsize:1
 
 
 mark r /
+mark e /etc
 mark u /usr
 mark l /lib
-mark b /bin
 
 mark h ~/
+mark b ~/bin
 mark p ~/prj
+mark i ~/prj/improvements
+mark D ~/prj/dotfiles
 mark d ~/Downloads
-mark t ~/.local/share/vifm/Trash
 mark w ~/workground
+mark t ~/.local/share/vifm/Trash
 
 
 " Quit
@@ -79,6 +82,7 @@ nnoremap ce cw<c-u><c-x>r<c-e>.
 
 " Toggle options
 command! toggle :execute 'set %a! | echo "%a" &%a'
+nnoremap th :toggle dotfiles<cr>
 nnoremap tw :toggle wrap<cr>
 nnoremap tm :toggle millerview<cr>
 nnoremap tl :toggle lsview<cr>
@@ -87,6 +91,17 @@ nnoremap tr :toggle relativenumber<cr>
 nnoremap tN :windo toggle number<cr>
 nnoremap tR :windo toggle relativenumber<cr>
 nnoremap tt :tree<cr>
+
+" Create new files
+nnoremap <space>nf :touch ''<c-b>
+nnoremap <space>nd :mkdir ''<c-b>
+
+" Gist support
+nnoremap <space>gg :!gist %f | xsel -b<cr>
+nnoremap <space>gp :!gist -p %f | xsel -b<cr>
+
+" Compression & archiving
+nnoremap <space>u :!aunpack %c<cr>
 
 " Map arrow keys to something more usefull
 nnoremap <left>  :wincmd <<cr>
@@ -110,9 +125,20 @@ nnoremap <esc>[1;6C <nop>
 nnoremap <esc>[1;6A <nop>
 nnoremap <esc>[1;6B <nop>
 
+" view images inside directory
+nnoremap si :!sxiv -r %d<cr>
+
+" select folder with fzf
+command selectDirectory :execute 'cd' system('fd -t d ".*" | ursa -p bottom -s 35 -c fzf')
+nnoremap <space>fd :selectDirectory<cr>
+
 " xoria256, rdark, freya, darkbone
 fileviewer <text/*> highlight -O xterm256 --failsafe -s freya
 
 " https://q2a.vifm.info/338/disable-defalt-filepreview-for-directories-and-binary-files
 fileviewer /.*\// file --mime-type
 fileviewer /.*/ file --mime-type
+
+filetype <image/*> sxiv
+filetype *.pdf zathura &
+filetype *.flac mpv --no-audio-display
